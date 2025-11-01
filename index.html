@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASME VIII-2 Part 5 Pressure Vessel Analysis | Umesh Gohil</title>
+    <title>Pressure Vessel Analysis Repository | Multi-Material Component Design</title>
     <style>
         :root {
             --engineering-blue: #1a365d;
@@ -25,6 +25,7 @@
             line-height: 1.7;
             color: var(--dark-charcoal);
             background: linear-gradient(135deg, var(--light-technical) 0%, #ffffff 100%);
+            min-height: 100vh;
         }
         
         .container {
@@ -33,856 +34,418 @@
             padding: 0 20px;
         }
         
-        /* Header Styles */
+        /* Header */
         header {
             background: linear-gradient(135deg, var(--engineering-blue) 0%, var(--dark-charcoal) 100%);
             color: white;
-            padding: 4rem 0 3rem;
-            position: relative;
+            padding: 3rem 0 2rem;
+            border-bottom: 4px solid var(--technical-teal);
         }
         
         .header-content h1 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
         
-        .project-meta {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+        .header-content .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
         }
         
-        .meta-item {
-            background: rgba(255,255,255,0.1);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        /* Navigation */
-        nav {
-            background: rgba(26, 54, 93, 0.95);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        nav .container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 1rem;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-        
-        nav a:hover {
-            color: var(--technical-teal);
-            background: rgba(255,255,255,0.1);
-        }
-        
-        /* Section Styles */
-        section {
-            padding: 4rem 0;
-        }
-        
-        section h2 {
-            margin-bottom: 2rem;
-            font-size: 2.2rem;
-            color: var(--engineering-blue);
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-        
-        section h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(135deg, var(--technical-teal) 0%, var(--precision-orange) 100%);
-        }
-        
-        .section-dark {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border-top: 1px solid #e2e8f0;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        
-        /* Engineering Data Tables */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
+        /* Repository Structure */
+        .repo-structure {
             background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-        
-        .data-table th, .data-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        
-        .data-table th {
-            background: var(--engineering-blue);
-            color: white;
-            font-weight: 600;
-        }
-        
-        .data-table tr:nth-child(even) {
-            background: #f8fafc;
-        }
-        
-        /* Analysis Methods Grid */
-        .methods-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .method-card {
-            background: white;
-            padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            border-left: 4px solid var(--technical-teal);
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
         }
         
-        .method-card h3 {
+        .folder {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--technical-teal);
+        }
+        
+        .folder-title {
+            font-weight: 600;
             color: var(--engineering-blue);
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
         }
         
-        .method-card h3::before {
-            content: '▸';
+        .folder-title::before {
+            content: '📁';
             margin-right: 0.5rem;
-            color: var(--technical-teal);
         }
         
-        /* Results Visualization */
-        .results-grid {
+        .file {
+            margin: 0.3rem 0;
+            padding-left: 2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .file::before {
+            content: '📄';
+            margin-right: 0.5rem;
+        }
+        
+        .file-type {
+            font-size: 0.8rem;
+            background: var(--light-technical);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+            color: var(--metal-gray);
+        }
+        
+        /* Material Specifications */
+        .material-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
-            margin-top: 2rem;
+            margin: 2rem 0;
         }
         
-        .result-item {
+        .material-card {
             background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--precision-orange);
         }
         
-        .result-image {
-            height: 200px;
-            background: #e2e8f0;
+        .material-card h3 {
+            color: var(--engineering-blue);
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--metal-gray);
-            font-size: 0.9rem;
-            border-bottom: 1px solid #e2e8f0;
         }
         
-        .result-content {
-            padding: 1.5rem;
+        .material-card h3::before {
+            content: '⚙️';
+            margin-right: 0.5rem;
         }
         
-        .result-content h4 {
-            color: var(--engineering-blue);
-            margin-bottom: 0.5rem;
+        .material-property {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #f1f5f9;
         }
         
-        /* File Downloads */
-        .download-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .download-card {
+        /* Analysis Methods */
+        .methods-container {
             background: white;
-            padding: 2rem;
             border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            text-align: center;
+        }
+        
+        .method-tabs {
+            display: flex;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 2rem;
+        }
+        
+        .method-tab {
+            padding: 1rem 2rem;
+            background: #f8fafc;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
             transition: all 0.3s ease;
         }
         
-        .download-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        .method-tab.active {
+            background: var(--engineering-blue);
+            color: white;
+        }
+        
+        .method-content {
+            display: none;
+        }
+        
+        .method-content.active {
+            display: block;
+        }
+        
+        /* Download Section */
+        .download-section {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 10px;
+            margin: 2rem 0;
         }
         
         .download-btn {
-            display: inline-block;
-            background: var(--technical-teal);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            margin-top: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        .download-btn:hover {
-            background: var(--engineering-blue);
-        }
-        
-        .back-portfolio {
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e2e8f0;
-        }
-        
-        .back-btn {
             display: inline-flex;
             align-items: center;
-            background: var(--engineering-blue);
+            background: var(--technical-teal);
             color: white;
             padding: 1rem 2rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
+            margin: 0.5rem;
             transition: all 0.3s ease;
         }
         
-        .back-btn:hover {
-            background: var(--technical-teal);
+        .download-btn:hover {
+            background: var(--engineering-blue);
+            transform: translateY(-2px);
         }
         
-        @media (max-width: 768px) {
-            .header-content h1 {
-                font-size: 2.2rem;
-            }
-            
-            nav .container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            nav a {
-                margin: 0.3rem;
-            }
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--metal-gray);
+            border-top: 1px solid #e2e8f0;
+            margin-top: 3rem;
         }
     </style>
 </head>
 <body>
-    <!-- Case Study Header -->
-    <header>
-        <div class="container">
+    <div class="container">
+        <!-- Header -->
+        <header>
             <div class="header-content">
-                <h1>ASME VIII-2 Part 5 Design-by-Analysis</h1>
-                <p style="font-size: 1.2rem; opacity: 0.9;">Three-Method Approach: Elastic Stress • Limit Load • Elastic-Plastic Analysis</p>
-                
-                <div class="project-meta">
-                    <div class="meta-item">
-                        <strong>Vessel Type</strong>
-                        Horizontal Pressure Vessel with Nozzles
-                    </div>
-                    <div class="meta-item">
-                        <strong>Design Code</strong>
-                        ASME Section VIII Division 2
-                    </div>
-                    <div class="meta-item">
-                        <strong>Analysis Method</strong>
-                        Part 5 - Design-by-Analysis
-                    </div>
-                    <div class="meta-item">
-                        <strong>CAD Source</strong>
-                        GrabCAD Model #PV-2024-001
-                    </div>
+                <h1>Pressure Vessel Analysis Repository</h1>
+                <p class="subtitle">ASME VIII-2 Part 5 Compliance • Multi-Material Component Design • Three-Method Analysis</p>
+                <p><strong>Repository Structure:</strong> Organized by Analysis Methods & Component Materials</p>
+            </div>
+        </header>
+
+        <!-- Repository Structure -->
+        <section class="repo-structure">
+            <h2>📁 Repository File Structure</h2>
+            
+            <div class="folder">
+                <div class="folder-title">01-Project-Documentation</div>
+                <div class="file">Design-Specification.md <span class="file-type">MARKDOWN</span></div>
+                <div class="file">User-Design-Specification.pdf <span class="file-type">PDF</span></div>
+                <div class="file">ASME-Compliance-Statement.md <span class="file-type">MARKDOWN</span></div>
+                <div class="file">Project-Timeline.xlsx <span class="file-type">EXCEL</span></div>
+            </div>
+            
+            <div class="folder">
+                <div class="folder-title">02-CAD-Geometry</div>
+                <div class="file">Vessel-Assembly.step <span class="file-type">STEP</span></div>
+                <div class="file">Vessel-Assembly.iges <span class="file-type">IGES</span></div>
+                <div class="file">Technical-Drawings/ <span class="file-type">FOLDER</span></div>
+                <div class="file">Component-Breakdown/ <span class="file-type">FOLDER</span></div>
+            </div>
+            
+            <div class="folder">
+                <div class="folder-title">03-Material-Specifications</div>
+                <div class="file">Pressure-Parts-Materials.md <span class="file-type">MARKDOWN</span></div>
+                <div class="file">Non-Pressure-Parts-Materials.md <span class="file-type">MARKDOWN</span></div>
+                <div class="file">Material-Certificates/ <span class="file-type">FOLDER</span></div>
+                <div class="file">Weld-Procedures/ <span class="file-type">FOLDER</span></div>
+            </div>
+            
+            <div class="folder">
+                <div class="folder-title">04-Analysis-Methods</div>
+                <div class="folder">
+                    <div class="folder-title">Method-1-Elastic-Stress</div>
+                    <div class="file">Analysis-Setup.md <span class="file-type">MARKDOWN</span></div>
+                    <div class="file">Stress-Linearization-Reports/ <span class="file-type">FOLDER</span></div>
+                    <div class="file">Platform-Comparison-Results/ <span class="file-type">FOLDER</span></div>
+                </div>
+                <div class="folder">
+                    <div class="folder-title">Method-2-Limit-Load</div>
+                    <div class="file">Analysis-Setup.md <span class="file-type">MARKDOWN</span></div>
+                    <div class="file">Collapse-Analysis-Reports/ <span class="file-type">FOLDER</span></div>
+                    <div class="file">Platform-Comparison-Results/ <span class="file-type">FOLDER</span></div>
+                </div>
+                <div class="folder">
+                    <div class="folder-title">Method-3-Elastic-Plastic</div>
+                    <div class="file">Analysis-Setup.md <span class="file-type">MARKDOWN</span></div>
+                    <div class="file">Plastic-Strain-Reports/ <span class="file-type">FOLDER</span></div>
+                    <div class="file">Platform-Comparison-Results/ <span class="file-type">FOLDER</span></div>
                 </div>
             </div>
-        </div>
-    </header>
-
-    <!-- Navigation -->
-    <nav>
-        <div class="container">
-            <a href="#input-data">Input Data</a>
-            <a href="#geometry">Geometry</a>
-            <a href="#loads">Load Cases</a>
-            <a href="#methods">Analysis Methods</a>
-            <a href="#results">Results</a>
-            <a href="#downloads">Files</a>
-        </div>
-    </nav>
-
-    <!-- Input Data Section -->
-    <section id="input-data">
-        <div class="container">
-            <h2>Design Input Data</h2>
             
-            <h3 style="color: var(--engineering-blue); margin: 2rem 0 1rem;">Vessel Design Parameters</h3>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Value</th>
-                        <th>Unit</th>
-                        <th>Remarks</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Design Pressure</td>
-                        <td>2.5</td>
-                        <td>MPa</td>
-                        <td>Internal operating pressure</td>
-                    </tr>
-                    <tr>
-                        <td>Design Temperature</td>
-                        <td>200</td>
-                        <td>°C</td>
-                        <td>Maximum operating temperature</td>
-                    </tr>
-                    <tr>
-                        <td>Hydrotest Pressure</td>
-                        <td>3.125</td>
-                        <td>MPa</td>
-                        <td>1.25 × Design Pressure</td>
-                    </tr>
-                    <tr>
-                        <td>Corrosion Allowance</td>
-                        <td>3</td>
-                        <td>mm</td>
-                        <td>Per client specification</td>
-                    </tr>
-                    <tr>
-                        <td>Design Life</td>
-                        <td>20</td>
-                        <td>Years</td>
-                        <td>Including fatigue assessment</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3 style="color: var(--engineering-blue); margin: 2rem 0 1rem;">Material Properties - SA-516 Gr. 70</h3>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Property</th>
-                        <th>Room Temp</th>
-                        <th>200°C</th>
-                        <th>Unit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Yield Strength (S<sub>y</sub>)</td>
-                        <td>262</td>
-                        <td>227</td>
-                        <td>MPa</td>
-                    </tr>
-                    <tr>
-                        <td>Tensile Strength (S<sub>u</sub>)</td>
-                        <td>483</td>
-                        <td>448</td>
-                        <td>MPa</td>
-                    </tr>
-                    <tr>
-                        <td>Young's Modulus (E)</td>
-                        <td>200,000</td>
-                        <td>193,000</td>
-                        <td>MPa</td>
-                    </tr>
-                    <tr>
-                        <td>Poisson's Ratio (ν)</td>
-                        <td>0.3</td>
-                        <td>0.3</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>Thermal Expansion (α)</td>
-                        <td>11.7 × 10<sup>-6</sup></td>
-                        <td>12.8 × 10<sup>-6</sup></td>
-                        <td>mm/mm°C</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- Geometry Specifications -->
-    <section id="geometry" class="section-dark">
-        <div class="container">
-            <h2>Vessel Geometry & Dimensions</h2>
-            
-            <div style="background: white; padding: 2rem; border-radius: 10px; margin: 2rem 0;">
-                <h3 style="color: var(--engineering-blue); margin-bottom: 1rem;">GrabCAD Model Reference: PV-HZ-10K-001</h3>
-                <p><strong>Model Source:</strong> <a href="https://grabcad.com/library/horizontal-pressure-vessel-1" style="color: var(--technical-teal);">Download 3D Model from GrabCAD</a></p>
-                <p><strong>File Format:</strong> STEP, IGES, SLDPRT</p>
+            <div class="folder">
+                <div class="folder-title">05-Results-Validation</div>
+                <div class="file">Cross-Platform-Comparison.md <span class="file-type">MARKDOWN</span></div>
+                <div class="file">Code-Compliance-Checklist.pdf <span class="file-type">PDF</span></div>
+                <div class="file">Safety-Factor-Verification.xlsx <span class="file-type">EXCEL</span></div>
+                <div class="file">Validation-Reports/ <span class="file-type">FOLDER</span></div>
             </div>
-
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Component</th>
-                        <th>Dimension</th>
-                        <th>Value</th>
-                        <th>Unit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Shell</td>
-                        <td>Inside Diameter</td>
-                        <td>2000</td>
-                        <td>mm</td>
-                    </tr>
-                    <tr>
-                        <td>Shell</td>
-                        <td>Length (Straight)</td>
-                        <td>6000</td>
-                        <td>mm</td>
-                    </tr>
-                    <tr>
-                        <td>Shell</td>
-                        <td>Thickness</td>
-                        <td>16</td>
-                        <td>mm</td>
-                    </tr>
-                    <tr>
-                        <td>Heads</td>
-                        <td>Type</td>
-                        <td>2:1 Semi-Elliptical</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>Heads</td>
-                        <td>Thickness</td>
-                        <td>14</td>
-                        <td>mm</td>
-                    </tr>
-                    <tr>
-                        <td>Nozzle N1</td>
-                        <td>Size × Thickness</td>
-                        <td>300 × 12</td>
-                        <td>mm</td>
-                    </tr>
-                    <tr>
-                        <td>Nozzle N2</td>
-                        <td>Size × Thickness</td>
-                        <td>150 × 10</td>
-                        <td>mm</td>
-                    </tr>
-                    <tr>
-                        <td>Supports</td>
-                        <td>Type</td>
-                        <td>2 Saddles</td>
-                        <td>-</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="results-grid">
-                <div class="result-item">
-                    <div class="result-image">
-                        [Image: Vessel 3D Model from GrabCAD]
-                        <div style="text-align: center;">
-                            <strong>3D CAD Model</strong><br>
-                            Horizontal vessel with nozzles
-                        </div>
-                    </div>
-                </div>
-                <div class="result-item">
-                    <div class="result-image">
-                        [Image: Nozzle Detail View]
-                        <div style="text-align: center;">
-                            <strong>Nozzle Reinforcement</strong><br>
-                            Pad reinforcement detail
-                        </div>
-                    </div>
-                </div>
+            
+            <div class="folder">
+                <div class="folder-title">06-Deliverables</div>
+                <div class="file">Final-Engineering-Report.pdf <span class="file-type">PDF</span></div>
+                <div class="file">Design-Certificate.pdf <span class="file-type">PDF</span></div>
+                <div class="file">Fabrication-Drawings/ <span class="file-type">FOLDER</span></div>
+                <div class="file">Inspection-Reports/ <span class="file-type">FOLDER</span></div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Load Cases -->
-    <section id="loads">
-        <div class="container">
-            <h2>Load Cases & Categories</h2>
+        <!-- Material Specifications -->
+        <section class="repo-structure">
+            <h2>🔩 Multi-Material Component Specifications</h2>
             
-            <h3 style="color: var(--engineering-blue); margin: 2rem 0 1rem;">Primary Loads</h3>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Load Type</th>
-                        <th>Magnitude</th>
-                        <th>Category</th>
-                        <th>ASME Reference</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Internal Pressure</td>
-                        <td>2.5 MPa</td>
-                        <td>Sustained</td>
-                        <td>VIII-2 4.1.5.1</td>
-                    </tr>
-                    <tr>
-                        <td>Hydrotest Pressure</td>
-                        <td>3.125 MPa</td>
-                        <td>Test</td>
-                        <td>VIII-2 4.1.6</td>
-                    </tr>
-                    <tr>
-                        <td>Dead Weight</td>
-                        <td>12,500 kg</td>
-                        <td>Sustained</td>
-                        <td>VIII-2 4.1.5.2</td>
-                    </tr>
-                    <tr>
-                        <td>Nozzle Loads (WRC-107)</td>
-                        <td>Fx=5kN, Fy=3kN, Mz=2kNm</td>
-                        <td>Sustained</td>
-                        <td>VIII-2 4.1.5.4</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3 style="color: var(--engineering-blue); margin: 2rem 0 1rem;">Secondary Loads</h3>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Load Type</th>
-                        <th>Magnitude</th>
-                        <th>Category</th>
-                        <th>ASME Reference</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Thermal Gradient</td>
-                        <td>150°C to 200°C</td>
-                        <td>Self-limiting</td>
-                        <td>VIII-2 5.2.3.3</td>
-                    </tr>
-                    <tr>
-                        <td>Startup/Shutdown</td>
-                        <td>10,000 cycles</td>
-                        <td>Cyclic</td>
-                        <td>VIII-2 5.5.2</td>
-                    </tr>
-                    <tr>
-                        <td>Seismic (OBE)</td>
-                        <td>0.15g horizontal</td>
-                        <td>Occasional</td>
-                        <td>VIII-2 4.1.5.5</td>
-                    </tr>
-                    <tr>
-                        <td>Wind Load</td>
-                        <td>150 km/h</td>
-                        <td>Occasional</td>
-                        <td>VIII-2 4.1.5.6</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- ASME Part 5 Analysis Methods -->
-    <section id="methods" class="section-dark">
-        <div class="container">
-            <h2>ASME VIII-2 Part 5 Analysis Methods</h2>
-            
-            <div class="methods-grid">
-                <div class="method-card">
-                    <h3>Method 1: Elastic Stress Analysis</h3>
-                    <p><strong>ASME Reference:</strong> VIII-2 Part 5.2.2</p>
-                    <p><strong>Purpose:</strong> Stress categorization and linearization</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Membrane stress (P<sub>m</sub>) evaluation</li>
-                        <li>Membrane + bending (P<sub>L</sub> + P<sub>b</sub>)</li>
-                        <li>Stress linearization paths</li>
-                        <li>Allowable stress checks</li>
-                    </ul>
+            <div class="material-grid">
+                <div class="material-card">
+                    <h3>Pressure Parts - Internal Contact</h3>
+                    <div class="material-property">
+                        <span>Shell & Dished Ends:</span>
+                        <span>SA-516 Gr. 70</span>
+                    </div>
+                    <div class="material-property">
+                        <span>Design Temperature:</span>
+                        <span>200°C</span>
+                    </div>
+                    <div class="material-property">
+                        <span>Corrosion Allowance:</span>
+                        <span>3.0 mm</span>
+                    </div>
+                    <div class="material-property">
+                        <span>Yield Strength:</span>
+                        <span>262 MPa</span>
+                    </div>
                 </div>
                 
-                <div class="method-card">
-                    <h3>Method 2: Limit-Load Analysis</h3>
-                    <p><strong>ASME Reference:</strong> VIII-2 Part 5.2.3</p>
-                    <p><strong>Purpose:</strong> Plastic collapse prevention</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Small displacement theory</li>
-                        <li>Perfectly plastic material</li>
-                        <li>Load multiplier calculation</li>
-                        <li>Collapse load determination</li>
-                    </ul>
+                <div class="material-card">
+                    <h3>Pressure Parts - Non-Contact</h3>
+                    <div class="material-property">
+                        <span>Nozzle Necks:</span>
+                        <span>SA-312 TP304L</span>
+                    </div>
+                    <div class="material-property">
+                        <span>Flanges:</span>
+                        <span>SA-182 F304L</span>
+                    </div>
+                    <div class="material-property">
+                        <span>Design Temperature:</span>
+                        <span>200°C</span>
+                    </div>
+                    <div class="material-property">
+                        <span>Corrosion Allowance:</span>
+                        <span>1.5 mm</span>
+                    </div>
                 </div>
                 
-                <div class="method-card">
-                    <h3>Method 3: Elastic-Plastic Analysis</h3>
-                    <p><strong>ASME Reference:</strong> VIII-2 Part 5.2.4</p>
-                    <p><strong>Purpose:</strong> Strain limits and ratcheting</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>True stress-strain curve</li>
-                        <li>Cyclic loading simulation</li>
-                        <li>Strain accumulation check</li>
-                        <li>Ratcheting assessment</li>
-                    </ul>
+                <div class="material-card">
+                    <h3>Non-Pressure Parts</h3>
+                    <div class="material-property">
+                        <span>Saddle Supports:</span>
+                        <span>SA-240 304L</span>
+                    </div>
+                    <div class="material-property">
+                        <span>Additional Supports:</span>
+                        <span>Carbon Steel A36</span>
+                    </div>
+                    <div class="material-property">
+                        <span>Bolting:</span>
+                        <span>SA-193 B8</span>
+                    </div>
+                    <div class="material-property">
+                        <span>Gaskets:</span>
+                        <span>Spiral Wound 304L</span>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div style="background: white; padding: 2rem; border-radius: 10px; margin-top: 2rem;">
-                <h3 style="color: var(--engineering-blue); margin-bottom: 1rem;">Analysis Approach for This Study</h3>
-                <p><strong>All three methods</strong> were applied to critical locations:</p>
-                <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                    <li><strong>Nozzle-to-shell junction:</strong> Elastic stress analysis with stress linearization</li>
-                    <li><strong>Head knuckle region:</strong> Limit-load analysis for collapse prevention</li>
-                    <li><strong>Saddle support:</strong> Elastic-plastic analysis for cyclic loading</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Analysis Results -->
-    <section id="results">
-        <div class="container">
-            <h2>Analysis Results & Compliance</h2>
+        <!-- Analysis Methods -->
+        <section class="methods-container">
+            <h2>📊 ASME VIII-2 Part 5 Analysis Methods</h2>
             
-            <h3 style="color: var(--engineering-blue); margin: 2rem 0 1rem;">Method 1: Elastic Stress Analysis Results</h3>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Location</th>
-                        <th>Stress Type</th>
-                        <th>Calculated (MPa)</th>
-                        <th>Allowable (MPa)</th>
-                        <th>Ratio</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Nozzle N1</td>
-                        <td>P<sub>m</sub></td>
-                        <td>98.5</td>
-                        <td>138.5</td>
-                        <td>0.71</td>
-                        <td style="color: var(--technical-teal);">PASS</td>
-                    </tr>
-                    <tr>
-                        <td>Nozzle N1</td>
-                        <td>P<sub>L</sub> + P<sub>b</sub></td>
-                        <td>156.2</td>
-                        <td>207.8</td>
-                        <td>0.75</td>
-                        <td style="color: var(--technical-teal);">PASS</td>
-                    </tr>
-                    <tr>
-                        <td>Head Knuckle</td>
-                        <td>P<sub>m</sub></td>
-                        <td>112.3</td>
-                        <td>138.5</td>
-                        <td>0.81</td>
-                        <td style="color: var(--technical-teal);">PASS</td>
-                    </tr>
-                    <tr>
-                        <td>Saddle Horn</td>
-                        <td>P<sub>L</sub> + P<sub>b</sub></td>
-                        <td>178.9</td>
-                        <td>207.8</td>
-                        <td>0.86</td>
-                        <td style="color: var(--technical-teal);">PASS</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3 style="color: var(--engineering-blue); margin: 2rem 0 1rem;">Method 2: Limit-Load Analysis Results</h3>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Location</th>
-                        <th>Collapse Load</th>
-                        <th>Design Load</th>
-                        <th>Load Factor</th>
-                        <th>Required</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Overall Vessel</td>
-                        <td>8.75 MPa</td>
-                        <td>2.5 MPa</td>
-                        <td>3.50</td>
-                        <td>2.40</td>
-                        <td style="color: var(--technical-teal);">PASS</td>
-                    </tr>
-                    <tr>
-                        <td>Nozzle Junction</td>
-                        <td>6.25 MPa</td>
-                        <td>2.5 MPa</td>
-                        <td>2.50</td>
-                        <td>2.40</td>
-                        <td style="color: var(--technical-teal);">PASS</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3 style="color: var(--engineering-blue); margin: 2rem 0 1rem;">Method 3: Elastic-Plastic Analysis Results</h3>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Assessment</th>
-                        <th>Calculated</th>
-                        <th>Allowable</th>
-                        <th>Status</th>
-                        <th>ASME Paragraph</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Strain Limit</td>
-                        <td>1.8%</td>
-                        <td>5.0%</td>
-                        <td style="color: var(--technical-teal);">PASS</td>
-                        <td>5.2.4.2</td>
-                    </tr>
-                    <tr>
-                        <td>Ratcheting</td>
-                        <td>No accumulation</td>
-                        <td>No ratcheting</td>
-                        <td style="color: var(--technical-teal);">PASS</td>
-                        <td>5.2.4.3</td>
-                    </tr>
-                    <tr>
-                        <td>Fatigue Usage</td>
-                        <td>0.45</td>
-                        <td>1.00</td>
-                        <td style="color: var(--technical-teal);">PASS</td>
-                        <td>5.5.4</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="results-grid">
-                <div class="result-item">
-                    <div class="result-image">
-                        [Image: Stress Linearization Plot]
-                        <div style="text-align: center;">
-                            <strong>Stress Linearization</strong><br>
-                            Nozzle junction path A-B
-                        </div>
-                    </div>
-                </div>
-                <div class="result-item">
-                    <div class="result-image">
-                        [Image: Limit Load Curve]
-                        <div style="text-align: center;">
-                            <strong>Load-Displacement</strong><br>
-                            Collapse progression
-                        </div>
-                    </div>
-                </div>
-                <div class="result-item">
-                    <div class="result-image">
-                        [Image: Plastic Strain]
-                        <div style="text-align: center;">
-                            <strong>Plastic Strain</strong><br>
-                            Elastic-plastic analysis
-                        </div>
-                    </div>
-                </div>
+            <div class="method-tabs">
+                <button class="method-tab active" onclick="showMethod(1)">Method 1: Elastic Stress</button>
+                <button class="method-tab" onclick="showMethod(2)">Method 2: Limit Load</button>
+                <button class="method-tab" onclick="showMethod(3)">Method 3: Elastic-Plastic</button>
             </div>
-        </div>
-    </section>
-
-    <!-- File Downloads -->
-    <section id="downloads" class="section-dark">
-        <div class="container">
-            <h2>Engineering Files & Documentation</h2>
             
-            <div class="download-grid">
-                <div class="download-card">
-                    <h3>Complete Analysis Report</h3>
-                    <p>Detailed PDF report with all calculations and results</p>
-                    <a href="#" class="download-btn">Download PDF (2.4 MB)</a>
-                </div>
+            <div id="method-1" class="method-content active">
+                <h3>Elastic Stress Analysis (ASME 5.2.2)</h3>
+                <p><strong>Purpose:</strong> Stress categorization and linearization for code compliance</p>
                 
-                <div class="download-card">
-                    <h3>FEA Input Files</h3>
-                    <p>ANSYS Workbench project files and setup</p>
-                    <a href="#" class="download-btn">Download ZIP (15 MB)</a>
-                </div>
-                
-                <div class="download-card">
-                    <h3>Calculation Sheets</h3>
-                    <p>Excel sheets with all design calculations</p>
-                    <a href="#" class="download-btn">Download XLSX (1.1 MB)</a>
-                </div>
-                
-                <div class="download-card">
-                    <h3>GrabCAD Model</h3>
-                    <p>Original 3D CAD model for reference</p>
-                    <a href="https://grabcad.com/library/horizontal-pressure-vessel-1" class="download-btn" target="_blank">View on GrabCAD</a>
+                <div class="folder">
+                    <div class="folder-title">Analysis Files</div>
+                    <div class="file">stress-linearization-paths.md <span class="file-type">CONFIG</span></div>
+                    <div class="file">boundary-conditions-setup.md <span class="file-type">CONFIG</span></div>
+                    <div class="file">platform-a-results/ <span class="file-type">FOLDER</span></div>
+                    <div class="file">platform-b-results/ <span class="file-type">FOLDER</span></div>
+                    <div class="file">comparison-tables.xlsx <span class="file-type">EXCEL</span></div>
                 </div>
             </div>
+            
+            <div id="method-2" class="method-content">
+                <h3>Limit Load Analysis (ASME 5.2.3)</h3>
+                <p><strong>Purpose:</strong> Plastic collapse prevention assessment</p>
+                
+                <div class="folder">
+                    <div class="folder-title">Analysis Files</div>
+                    <div class="file">collapse-criteria.md <span class="file-type">CONFIG</span></div>
+                    <div class="file">load-multiplier-calculation.md <span class="file-type">CONFIG</span></div>
+                    <div class="file">platform-a-results/ <span class="file-type">FOLDER</span></div>
+                    <div class="file">platform-b-results/ <span class="file-type">FOLDER</span></div>
+                    <div class="file">collapse-mechanisms/ <span class="file-type">FOLDER</span></div>
+                </div>
+            </div>
+            
+            <div id="method-3" class="method-content">
+                <h3>Elastic-Plastic Analysis (ASME 5.2.4)</h3>
+                <p><strong>Purpose:</strong> Strain limits and ratcheting assessment</p>
+                
+                <div class="folder">
+                    <div class="folder-title">Analysis Files</div>
+                    <div class="file">material-curves.md <span class="file-type">CONFIG</span></div>
+                    <div class="file">cyclic-loading-definition.md <span class="file-type">CONFIG</span></div>
+                    <div class="file">platform-a-results/ <span class="file-type">FOLDER</span></div>
+                    <div class="file">platform-b-results/ <span class="file-type">FOLDER</span></div>
+                    <div class="file">platform-c-results/ <span class="file-type">FOLDER</span></div>
+                    <div class="file">strain-accumulation/ <span class="file-type">FOLDER</span></div>
+                </div>
+            </div>
+        </section>
 
-            <div style="background: white; padding: 2rem; border-radius: 10px; margin-top: 2rem;">
-                <h3 style="color: var(--engineering-blue); margin-bottom: 1rem;">Repository Structure</h3>
-                <pre style="background: #f8f9fa; padding: 1rem; border-radius: 5px; overflow-x: auto;">
-Pressure-Vessel-Analysis/
-├── 01-Input-Data/
-│   ├── Design-Specification.pdf
-│   ├── Material-Certificates.pdf
-│   └── Load-Case-Matrix.xlsx
-├── 02-FEA-Models/
-│   ├── ANSYS-Workbench-Files/
-│   ├── Mesh-Convergence-Study/
-│   └── Boundary-Conditions/
-├── 03-Analysis-Results/
-│   ├── Elastic-Stress-Analysis/
-│   ├── Limit-Load-Analysis/
-│   ├── Elastic-Plastic-Analysis/
-│   └── Fatigue-Assessment/
-├── 04-Compliance-Docs/
-│   ├── ASME-Code-Checklist.pdf
-│   └── Design-Certificate.pdf
-└── 05-Visualizations/
-    ├── Stress-Plots/
-    ├── Deformation-Animations/
-    └── Report-Figures/</pre>
-            </div>
-        </div>
-    </section>
+        <!-- Download Section -->
+        <section class="download-section">
+            <h2>📥 Download Complete Analysis Package</h2>
+            <p>Access all engineering files, reports, and validation documents</p>
+            
+            <a href="#" class="download-btn">📦 Download Repository ZIP (45 MB)</a>
+            <a href="#" class="download-btn">📋 View Live Analysis Report</a>
+            <a href="#" class="download-btn">🔗 Main Portfolio</a>
+        </section>
 
-    <!-- Back to Portfolio -->
-    <section>
-        <div class="container">
-            <div class="back-portfolio">
-                <a href="https://umesh6789.github.io/umeshgohil-portfolio/" class="back-btn">
-                    ← Back to Main Portfolio
-                </a>
-                <p style="margin-top: 1rem; opacity: 0.8;">Explore more engineering projects and case studies</p>
-            </div>
-        </div>
-    </section>
+        <footer>
+            <p>Pressure Vessel Analysis Repository • ASME VIII-2 Part 5 Compliance • Multi-Material Design</p>
+            <p>Engineering Documentation System • Version 2.1 • Updated: 2024</p>
+        </footer>
+    </div>
+
+    <script>
+        function showMethod(methodNumber) {
+            // Hide all method contents
+            document.querySelectorAll('.method-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.method-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected method content
+            document.getElementById('method-' + methodNumber).classList.add('active');
+            
+            // Activate selected tab
+            event.target.classList.add('active');
+        }
+    </script>
 </body>
 </html>
