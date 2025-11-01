@@ -3,10 +3,648 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pressure Vessel Case Study | Multi-Software Validation</title>
+    <title>Pressure Vessel Engineering Hub | ASME VIII-2 Part 5 Analysis</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* [Keep all your beautiful CSS from previous design] */
-        /* I'll maintain the same premium styling */
+        :root {
+            --engineering-blue: #1a365d;
+            --technical-teal: #2a9d8f;
+            --precision-orange: #e76f51;
+            --metal-gray: #4a5568;
+            --light-technical: #f7fafc;
+            --dark-charcoal: #2d3748;
+            --gold-accent: #f6ad55;
+            --silver-metal: #a0aec0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-charcoal);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Advanced Animated Header */
+        .hero-section {
+            background: linear-gradient(135deg, 
+                rgba(26, 54, 93, 0.95) 0%, 
+                rgba(30, 41, 59, 0.98) 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon points="0,0 1000,0 1000,1000" fill="%232a9d8f" opacity="0.1"/></svg>');
+            color: white;
+            padding: 6rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid var(--gold-accent);
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(42, 157, 143, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(231, 111, 81, 0.15) 0%, transparent 50%),
+                linear-gradient(45deg, transparent 30%, rgba(246, 173, 85, 0.05) 50%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 0.7; transform: scale(1.02); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold-accent) 0%, #ed8936 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(246, 173, 85, 0.3);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .stat-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold-accent);
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Advanced Navigation */
+        .main-nav {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-logo i {
+            color: var(--technical-teal);
+            margin-right: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--technical-teal);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .nav-link.active {
+            color: var(--gold-accent);
+            background: rgba(246, 173, 85, 0.1);
+        }
+        
+        /* Premium Repository Structure */
+        .repo-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--technical-teal) 0%, #2a9d8f 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(42, 157, 143, 0.3);
+        }
+        
+        .section-title {
+            font-size: 2.8rem;
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .section-subtitle {
+            color: #cbd5e1;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Case Study Input Cards */
+        .case-study-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .case-study-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .case-study-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--gold-accent) 0%, var(--precision-orange) 100%);
+        }
+        
+        .case-study-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+        
+        .case-study-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--gold-accent);
+        }
+        
+        .case-study-title {
+            color: white;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .case-study-property {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: #e2e8f0;
+        }
+        
+        .property-name {
+            font-weight: 500;
+        }
+        
+        .property-value {
+            color: var(--technical-teal);
+            font-weight: 600;
+        }
+        
+        /* Advanced File Tree */
+        .file-tree {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            margin-bottom: 3rem;
+        }
+        
+        .tree-item {
+            margin: 1rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .tree-folder {
+            color: var(--gold-accent);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+        
+        .tree-folder:hover {
+            background: rgba(246, 173, 85, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .tree-folder i {
+            margin-right: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .tree-file {
+            color: #e2e8f0;
+            margin: 0.5rem 0;
+            padding: 0.5rem 1rem;
+            padding-left: 2.5rem;
+            display: flex;
+            align-items: center;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .tree-file:hover {
+            background: rgba(42, 157, 143, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .tree-file i {
+            margin-right: 0.8rem;
+            color: var(--technical-teal);
+        }
+        
+        .file-badge {
+            background: var(--engineering-blue);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-left: 1rem;
+            font-weight: 600;
+        }
+        
+        /* Analysis Methods Tabs */
+        .methods-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        
+        .methods-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .method-tab {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #cbd5e1;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 200px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .method-tab:hover {
+            background: rgba(42, 157, 143, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .method-tab.active {
+            background: linear-gradient(135deg, var(--technical-teal) 0%, #2a9d8f 100%);
+            color: white;
+            box-shadow: 0 10px 25px rgba(42, 157, 143, 0.3);
+            border-color: transparent;
+        }
+        
+        .method-content {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            display: none;
+        }
+        
+        .method-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .method-header {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .method-header i {
+            color: var(--gold-accent);
+            margin-right: 1rem;
+            font-size: 2.5rem;
+        }
+        
+        .method-description {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Software Comparison Grid */
+        .software-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .software-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .software-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--technical-teal);
+        }
+        
+        .software-badge {
+            display: inline-block;
+            background: var(--engineering-blue);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .software-title {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .software-title i {
+            margin-right: 0.5rem;
+            color: var(--gold-accent);
+        }
+        
+        /* Download Section */
+        .download-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 70% 30%, rgba(246, 173, 85, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 30% 70%, rgba(42, 157, 143, 0.1) 0%, transparent 50%);
+        }
+        
+        .download-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .download-title {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .download-subtitle {
+            color: #cbd5e1;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .download-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--gold-accent) 0%, #ed8936 100%);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(246, 173, 85, 0.3);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(246, 173, 85, 0.4);
+        }
+        
+        .download-btn.secondary {
+            background: linear-gradient(135deg, var(--technical-teal) 0%, #2a9d8f 100%);
+            box-shadow: 0 10px 25px rgba(42, 157, 143, 0.3);
+        }
+        
+        .download-btn i {
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Footer */
+        .main-footer {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--technical-teal);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #94a3b8;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .methods-tabs {
+                flex-direction: column;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .download-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -15,10 +653,10 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <i class="fas fa-certificate"></i> CASE STUDY: MULTI-SOFTWARE VALIDATION
+                    <i class="fas fa-certificate"></i> MULTI-SOFTWARE VALIDATION CASE STUDY
                 </div>
-                <h1 class="hero-title">Pressure Vessel Analysis</h1>
-                <p class="hero-subtitle">ASME VIII-2 Part 5 Compliance • ANSYS vs Nastran vs CFD Comparison • Real Engineering Validation</p>
+                <h1 class="hero-title">Pressure Vessel Engineering Hub</h1>
+                <p class="hero-subtitle">ASME VIII-2 Part 5 Compliance • ANSYS vs Nastran vs CFD Comparison • Professional Engineering Validation</p>
                 
                 <div class="hero-stats">
                     <div class="stat-item">
@@ -26,94 +664,115 @@
                         <span class="stat-label">Analysis Methods</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">45+</span>
-                        <span class="stat-label">Validation Files</span>
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Software Platforms</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-number">100%</span>
                         <span class="stat-label">Code Compliance</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">45+</span>
+                        <span class="stat-label">Engineering Files</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Premium Navigation -->
+    <nav class="main-nav">
+        <div class="container nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-industry"></i>
+                PV Engineering Hub
+            </div>
+            <div class="nav-links">
+                <a href="#case-study" class="nav-link active">Case Study</a>
+                <a href="#cad" class="nav-link">CAD Model</a>
+                <a href="#analysis" class="nav-link">Analysis Methods</a>
+                <a href="#downloads" class="nav-link">Downloads</a>
+                <a href="https://umesh6789.github.io/umeshgohil-portfolio/" class="nav-link">Main Portfolio</a>
+            </div>
+        </div>
+    </nav>
+
     <!-- Case Study Input Data -->
-    <section class="repo-section">
+    <section id="case-study" class="repo-section">
         <div class="container">
             <div class="section-header">
                 <div class="section-badge">
-                    <i class="fas fa-database"></i> CASE STUDY INPUTS
+                    <i class="fas fa-database"></i> ENGINEERING CASE STUDY
                 </div>
-                <h2 class="section-title">Design Basis & Parameters</h2>
-                <p class="section-subtitle">Example pressure vessel analysis with realistic engineering parameters</p>
+                <h2 class="section-title">Pressure Vessel Analysis Inputs</h2>
+                <p class="section-subtitle">Professional engineering validation with realistic design parameters and multi-software approach</p>
             </div>
 
-            <div class="materials-grid">
-                <div class="material-card">
-                    <div class="material-icon">
+            <div class="case-study-grid">
+                <div class="case-study-card">
+                    <div class="case-study-icon">
                         <i class="fas fa-flask"></i>
                     </div>
-                    <h3 class="material-title">Design Parameters</h3>
-                    <div class="material-property">
+                    <h3 class="case-study-title">Design Parameters</h3>
+                    <div class="case-study-property">
                         <span class="property-name">Design Pressure</span>
                         <span class="property-value">3.5 MPa</span>
                     </div>
-                    <div class="material-property">
+                    <div class="case-study-property">
                         <span class="property-name">Design Temperature</span>
                         <span class="property-value">180°C</span>
                     </div>
-                    <div class="material-property">
+                    <div class="case-study-property">
                         <span class="property-name">Hydrotest Pressure</span>
                         <span class="property-value">4.375 MPa</span>
                     </div>
-                    <div class="material-property">
+                    <div class="case-study-property">
                         <span class="property-name">Corrosion Allowance</span>
                         <span class="property-value">3.0 mm</span>
                     </div>
                 </div>
 
-                <div class="material-card">
-                    <div class="material-icon">
+                <div class="case-study-card">
+                    <div class="case-study-icon">
                         <i class="fas fa-cube"></i>
                     </div>
-                    <h3 class="material-title">Geometry & Materials</h3>
-                    <div class="material-property">
+                    <h3 class="case-study-title">Geometry & Materials</h3>
+                    <div class="case-study-property">
                         <span class="property-name">Shell Dimensions</span>
                         <span class="property-value">1800mm ID × 5500mm</span>
                     </div>
-                    <div class="material-property">
+                    <div class="case-study-property">
                         <span class="property-name">Shell Material</span>
                         <span class="property-value">SA-516 Gr. 70</span>
                     </div>
-                    <div class="material-property">
+                    <div class="case-study-property">
                         <span class="property-name">Nozzle Material</span>
                         <span class="property-value">SA-312 TP304L</span>
                     </div>
-                    <div class="material-property">
+                    <div class="case-study-property">
                         <span class="property-name">Design Code</span>
                         <span class="property-value">ASME VIII-2</span>
                     </div>
                 </div>
 
-                <div class="material-card">
-                    <div class="material-icon">
+                <div class="case-study-card">
+                    <div class="case-study-icon">
                         <i class="fas fa-weight-hanging"></i>
                     </div>
-                    <h3 class="material-title">Load Cases</h3>
-                    <div class="material-property">
+                    <h3 class="case-study-title">Load Conditions</h3>
+                    <div class="case-study-property">
                         <span class="property-name">Operating Condition</span>
                         <span class="property-value">Pressure + Thermal</span>
                     </div>
-                    <div class="material-property">
+                    <div class="case-study-property">
                         <span class="property-name">Test Condition</span>
                         <span class="property-value">Hydrotest</span>
                     </div>
-                    <div class="material-property">
+                    <div class="case-study-property">
                         <span class="property-name">Seismic Load</span>
                         <span class="property-value">0.2g Horizontal</span>
                     </div>
-                    <div class="material-property">
+                    <div class="case-study-property">
                         <span class="property-name">Wind Load</span>
                         <span class="property-value">150 km/h</span>
                     </div>
@@ -123,14 +782,14 @@
     </section>
 
     <!-- CAD Geometry Section -->
-    <section class="methods-section">
+    <section id="cad" class="methods-section">
         <div class="container">
             <div class="section-header">
                 <div class="section-badge">
-                    <i class="fas fa-cube"></i> 3D CAD GEOMETRY
+                    <i class="fas fa-cube"></i> 3D CAD MODEL
                 </div>
-                <h2 class="section-title">Vessel Model Files</h2>
-                <p class="section-subtitle">Download the complete 3D model for analysis verification</p>
+                <h2 class="section-title">Vessel Geometry Files</h2>
+                <p class="section-subtitle">Complete 3D model for analysis verification and professional engineering review</p>
             </div>
 
             <div class="file-tree">
@@ -156,14 +815,14 @@
     </section>
 
     <!-- Analysis Methods with Software Comparison -->
-    <section class="repo-section">
+    <section id="analysis" class="repo-section">
         <div class="container">
             <div class="section-header">
                 <div class="section-badge">
-                    <i class="fas fa-chart-bar"></i> SOFTWARE COMPARISON
+                    <i class="fas fa-chart-bar"></i> MULTI-SOFTWARE ANALYSIS
                 </div>
-                <h2 class="section-title">Three-Method Analysis Validation</h2>
-                <p class="section-subtitle">Cross-software verification using ANSYS, Autodesk Nastran, and CFD</p>
+                <h2 class="section-title">Three-Method Engineering Validation</h2>
+                <p class="section-subtitle">Professional cross-platform verification using industry-standard analysis software</p>
             </div>
 
             <div class="methods-tabs">
@@ -190,42 +849,52 @@
                     <i class="fas fa-ruler-combined"></i>
                     Elastic Stress Analysis - Software Comparison
                 </h3>
-                <p class="method-description">Stress linearization and categorization comparison between ANSYS and Autodesk Nastran</p>
+                <p class="method-description">Professional stress linearization and categorization comparison between ANSYS and Autodesk Nastran for code compliance verification</p>
                 
-                <div class="file-tree">
-                    <div class="tree-item">
-                        <div class="tree-folder">
-                            <i class="fas fa-folder-open"></i> Platform A - ANSYS Results
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-chart-line"></i> stress-contour-plot.png <span class="file-badge">IMAGE</span>
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-table"></i> linearization-results.xlsx <span class="file-badge">EXCEL</span>
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-file-alt"></i> ansys-analysis-report.pdf <span class="file-badge">PDF</span>
-                        </div>
-                    </div>
-                    
-                    <div class="tree-item">
-                        <div class="tree-folder">
-                            <i class="fas fa-folder-open"></i> Platform B - Autodesk Nastran
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-chart-line"></i> nastran-stress-results.png <span class="file-badge">IMAGE</span>
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-table"></i> validation-data.xlsx <span class="file-badge">EXCEL</span>
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-file-alt"></i> nastran-report.pdf <span class="file-badge">PDF</span>
+                <div class="software-grid">
+                    <div class="software-card">
+                        <div class="software-badge">Platform A</div>
+                        <h4 class="software-title">
+                            <i class="fas fa-cube"></i>
+                            ANSYS Workbench
+                        </h4>
+                        <div class="file-tree">
+                            <div class="tree-file">
+                                <i class="fas fa-chart-line"></i> stress-contour-plot.png <span class="file-badge">IMAGE</span>
+                            </div>
+                            <div class="tree-file">
+                                <i class="fas fa-table"></i> linearization-results.xlsx <span class="file-badge">EXCEL</span>
+                            </div>
+                            <div class="tree-file">
+                                <i class="fas fa-file-alt"></i> ansys-analysis-report.pdf <span class="file-badge">PDF</span>
+                            </div>
                         </div>
                     </div>
                     
+                    <div class="software-card">
+                        <div class="software-badge">Platform B</div>
+                        <h4 class="software-title">
+                            <i class="fas fa-cube"></i>
+                            Autodesk Nastran
+                        </h4>
+                        <div class="file-tree">
+                            <div class="tree-file">
+                                <i class="fas fa-chart-line"></i> nastran-stress-results.png <span class="file-badge">IMAGE</span>
+                            </div>
+                            <div class="tree-file">
+                                <i class="fas fa-table"></i> validation-data.xlsx <span class="file-badge">EXCEL</span>
+                            </div>
+                            <div class="tree-file">
+                                <i class="fas fa-file-alt"></i> nastran-report.pdf <span class="file-badge">PDF</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="file-tree" style="margin-top: 2rem;">
                     <div class="tree-item">
                         <div class="tree-folder">
-                            <i class="fas fa-folder-open"></i> Comparison Results
+                            <i class="fas fa-folder-open"></i> Comparison & Validation
                         </div>
                         <div class="tree-file">
                             <i class="fas fa-balance-scale"></i> software-comparison-table.xlsx <span class="file-badge">EXCEL</span>
@@ -246,36 +915,44 @@
                     <i class="fas fa-weight-hanging"></i>
                     Limit Load Analysis - Software Comparison
                 </h3>
-                <p class="method-description">Plastic collapse assessment comparison between ANSYS and Autodesk Nastran</p>
+                <p class="method-description">Professional plastic collapse assessment comparison between ANSYS and Autodesk Nastran for structural integrity verification</p>
                 
-                <div class="file-tree">
-                    <div class="tree-item">
-                        <div class="tree-folder">
-                            <i class="fas fa-folder-open"></i> Platform A - ANSYS Results
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-chart-line"></i> collapse-load-curve.png <span class="file-badge">IMAGE</span>
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-calculator"></i> load-multiplier.csv <span class="file-badge">DATA</span>
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-video"></i> failure-mode-animation.gif <span class="file-badge">GIF</span>
+                <div class="software-grid">
+                    <div class="software-card">
+                        <div class="software-badge">Platform A</div>
+                        <h4 class="software-title">
+                            <i class="fas fa-cube"></i>
+                            ANSYS Workbench
+                        </h4>
+                        <div class="file-tree">
+                            <div class="tree-file">
+                                <i class="fas fa-chart-line"></i> collapse-load-curve.png <span class="file-badge">IMAGE</span>
+                            </div>
+                            <div class="tree-file">
+                                <i class="fas fa-calculator"></i> load-multiplier.csv <span class="file-badge">DATA</span>
+                            </div>
+                            <div class="tree-file">
+                                <i class="fas fa-video"></i> failure-mode-animation.gif <span class="file-badge">GIF</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="tree-item">
-                        <div class="tree-folder">
-                            <i class="fas fa-folder-open"></i> Platform B - Autodesk Nastran
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-chart-line"></i> limit-load-results.png <span class="file-badge">IMAGE</span>
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-table"></i> validation-data.xlsx <span class="file-badge">EXCEL</span>
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-file-alt"></i> nastran-limit-load-report.pdf <span class="file-badge">PDF</span>
+                    <div class="software-card">
+                        <div class="software-badge">Platform B</div>
+                        <h4 class="software-title">
+                            <i class="fas fa-cube"></i>
+                            Autodesk Nastran
+                        </h4>
+                        <div class="file-tree">
+                            <div class="tree-file">
+                                <i class="fas fa-chart-line"></i> limit-load-results.png <span class="file-badge">IMAGE</span>
+                            </div>
+                            <div class="tree-file">
+                                <i class="fas fa-table"></i> validation-data.xlsx <span class="file-badge">EXCEL</span>
+                            </div>
+                            <div class="tree-file">
+                                <i class="fas fa-file-alt"></i> nastran-limit-load-report.pdf <span class="file-badge">PDF</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -287,36 +964,44 @@
                     <i class="fas fa-wave-square"></i>
                     Elastic-Plastic Analysis - Multi-Platform
                 </h3>
-                <p class="method-description">Nonlinear material behavior analysis with ANSYS and thermal-stress coupling with CFD</p>
+                <p class="method-description">Professional nonlinear material behavior analysis with ANSYS and thermal-stress coupling validation with Autodesk CFD</p>
                 
-                <div class="file-tree">
-                    <div class="tree-item">
-                        <div class="tree-folder">
-                            <i class="fas fa-folder-open"></i> Platform A - ANSYS
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-chart-area"></i> plastic-strain-plot.png <span class="file-badge">IMAGE</span>
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-wave-square"></i> stress-strain-curve.csv <span class="file-badge">DATA</span>
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-file-alt"></i> ratcheting-assessment.pdf <span class="file-badge">PDF</span>
+                <div class="software-grid">
+                    <div class="software-card">
+                        <div class="software-badge">Platform A</div>
+                        <h4 class="software-title">
+                            <i class="fas fa-cube"></i>
+                            ANSYS Workbench
+                        </h4>
+                        <div class="file-tree">
+                            <div class="tree-file">
+                                <i class="fas fa-chart-area"></i> plastic-strain-plot.png <span class="file-badge">IMAGE</span>
+                            </div>
+                            <div class="tree-file">
+                                <i class="fas fa-wave-square"></i> stress-strain-curve.csv <span class="file-badge">DATA</span>
+                            </div>
+                            <div class="tree-file">
+                                <i class="fas fa-file-alt"></i> ratcheting-assessment.pdf <span class="file-badge">PDF</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="tree-item">
-                        <div class="tree-folder">
-                            <i class="fas fa-folder-open"></i> Platform C - Autodesk CFD
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-thermometer-half"></i> thermal-stress-results.png <span class="file-badge">IMAGE</span>
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-video"></i> temperature-distribution.gif <span class="file-badge">GIF</span>
-                        </div>
-                        <div class="tree-file">
-                            <i class="fas fa-file-alt"></i> coupled-analysis-report.pdf <span class="file-badge">PDF</span>
+                    <div class="software-card">
+                        <div class="software-badge">Platform C</div>
+                        <h4 class="software-title">
+                            <i class="fas fa-wind"></i>
+                            Autodesk CFD
+                        </h4>
+                        <div class="file-tree">
+                            <div class="tree-file">
+                                <i class="fas fa-thermometer-half"></i> thermal-stress-results.png <span class="file-badge">IMAGE</span>
+                            </div>
+                            <div class="tree-file">
+                                <i class="fas fa-video"></i> temperature-distribution.gif <span class="file-badge">GIF</span>
+                            </div>
+                            <div class="tree-file">
+                                <i class="fas fa-file-alt"></i> coupled-analysis-report.pdf <span class="file-badge">PDF</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -325,16 +1010,16 @@
     </section>
 
     <!-- Download Section -->
-    <section class="download-section">
+    <section id="downloads" class="download-section">
         <div class="container">
             <div class="download-content">
-                <h2 class="download-title">Complete Analysis Package</h2>
-                <p class="download-subtitle">Download all analysis files, CAD models, and validation reports</p>
+                <h2 class="download-title">Professional Engineering Package</h2>
+                <p class="download-subtitle">Complete pressure vessel analysis documentation for professional review and validation</p>
                 
                 <div class="download-buttons">
                     <a href="#" class="download-btn">
                         <i class="fas fa-download"></i>
-                        Download Complete Package
+                        Download Complete Package (45 MB)
                     </a>
                     <a href="live-report.html" class="download-btn secondary">
                         <i class="fas fa-eye"></i>
@@ -349,10 +1034,82 @@
         </div>
     </section>
 
+    <!-- Premium Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Engineering Hub</h3>
+                    <p>Professional pressure vessel analysis and ASME code compliance documentation repository.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#case-study">Case Study Inputs</a></li>
+                        <li><a href="#cad">CAD Model</a></li>
+                        <li><a href="#analysis">Analysis Methods</a></li>
+                        <li><a href="#downloads">Download Files</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Technical Standards</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">ASME VIII-2 Part 5</a></li>
+                        <li><a href="#">Material Certifications</a></li>
+                        <li><a href="#">Quality Assurance</a></li>
+                        <li><a href="#">Validation Protocols</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Engineering</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:umeshsactivity@gmail.com">Project Inquiries</a></li>
+                        <li><a href="mailto:umesh.eng.mech@gmail.com">Technical Discussion</a></li>
+                        <li><a href="https://linkedin.com/in/umeshg78">LinkedIn Profile</a></li>
+                        <li><a href="https://github.com/umesh6789">GitHub Portfolio</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Pressure Vessel Engineering Hub. All rights reserved. | ASME VIII-2 Part 5 Compliant Analysis</p>
+                <p>Professional Engineering Documentation System • Version 2.1</p>
+            </div>
+        </div>
+    </footer>
+
     <script>
         function showMethod(methodNumber) {
-            // Method switching logic (same as before)
+            // Hide all method contents
+            document.querySelectorAll('.method-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.method-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected method content
+            document.getElementById('method-' + methodNumber).classList.add('active');
+            
+            // Activate selected tab
+            event.currentTarget.classList.add('active');
         }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
